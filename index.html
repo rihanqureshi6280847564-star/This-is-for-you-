@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>तुम्हारे लिए एक राज़...</title>
+<style>
+  body {
+    margin: 0; padding: 20px; background: radial-gradient(circle, #2b0918, #0d0208);
+    color: #fff; font-family: 'Segoe UI', sans-serif; text-align: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 90vh;
+  }
+  h2 { color: #ff8fa3; font-size: 22px; margin-bottom: 10px; }
+  p { color: #ffd6e0; font-size: 16px; max-width: 320px; }
+  #btn {
+    background: linear-gradient(45deg, #ff4d6d, #c9184a); color: white; border: none;
+    padding: 15px 30px; font-size: 18px; border-radius: 50px; cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 77, 109, 0.6); margin-top: 20px; font-weight: bold;
+  }
+  #mirror-box {
+    display: none; margin-top: 15px; position: relative;
+    width: 260px; height: 340px; border-radius: 50%;
+    border: 10px solid #ffd700; box-shadow: 0 0 35px #ff4d6d, inset 0 0 20px #000;
+    overflow: hidden; background: #000;
+  }
+  video {
+    width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);
+  }
+  #reveal-text {
+    display: none; margin-top: 20px; animation: fadeIn 1.5s;
+  }
+  .name { font-size: 28px; color: #ffd700; font-weight: bold; text-shadow: 0 0 10px #ff4d6d; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+</style>
+</head>
+<body>
+
+  <h2 id="heading">तुम पूछ रही थी ना कि मैं किससे प्यार करता हूँ?</h2>
+  <p id="subtext">नीचे दिए बटन को दबाओ और खुद देख लो वो कौन है...</p>
+  <button id="btn" onclick="openMirror()">यहाँ क्लिक करके देखो ❤️</button>
+
+  <div id="mirror-box">
+    <video id="camera" autoplay playsinline></video>
+  </div>
+
+  <div id="reveal-text">
+    <p style="font-size:18px; margin:5px;">वो कोई और नहीं, सिर्फ तुम हो...</p>
+    <div class="name">❤️ Warhamna ❤️</div>
+    <p style="font-size:15px; color:#ffb3c1;">मेरे घर के पास नहीं, मेरे दिल के सबसे करीब हो तुम!</p>
+  </div>
+
+<script>
+function openMirror() {
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+    .then(function(stream) {
+      document.getElementById('camera').srcObject = stream;
+      document.getElementById('btn').style.display = 'none';
+      document.getElementById('heading').innerText = "देखो, यही है वो लड़की...";
+      document.getElementById('subtext').style.display = 'none';
+      document.getElementById('mirror-box').style.display = 'block';
+      document.getElementById('reveal-text').style.display = 'block';
+    })
+    .catch(function(err) {
+      alert("अरे! पहले ऊपर 'Allow' (कैमरा परमिशन) पर क्लिक करो, तभी तो राज़ खुलेगा!");
+    });
+}
+</script>
+</body>
+</html>
